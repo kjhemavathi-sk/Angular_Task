@@ -1,0 +1,74 @@
+<main class="form-container">
+  <div class="page-heading">
+    <p class="eyebrow">Ticket Management</p>
+    <h1>Create Ticket</h1>
+    <p class="subtitle">Add a new ticket to the console.</p>
+  </div>
+
+  <section class="form-card">
+    <div class="success-message" *ngIf="submitted" role="status">
+      Ticket created successfully.
+      <button type="button" (click)="viewTickets()">View all tickets</button>
+    </div>
+
+    <form #ticketForm="ngForm" (ngSubmit)="onSubmit(ticketForm)" novalidate>
+      <div class="form-field">
+        <label for="title">Title <span aria-hidden="true">*</span></label>
+        <input
+          id="title"
+          name="title"
+          type="text"
+          [(ngModel)]="ticket.title"
+          #title="ngModel"
+          required
+          maxlength="100"
+          placeholder="Briefly describe the issue" />
+        <span class="error" *ngIf="title.invalid && title.touched">Enter a title.</span>
+      </div>
+
+      <div class="form-field">
+        <label for="description">Description <span aria-hidden="true">*</span></label>
+        <textarea
+          id="description"
+          name="description"
+          [(ngModel)]="ticket.description"
+          #description="ngModel"
+          required
+          rows="5"
+          placeholder="Describe the issue or request"></textarea>
+        <span class="error" *ngIf="description.invalid && description.touched">
+          Enter a description.
+        </span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="assignee">Assignee <span aria-hidden="true">*</span></label>
+          <input
+            id="assignee"
+            name="assignee"
+            type="text"
+            [(ngModel)]="ticket.assignee"
+            #assignee="ngModel"
+            required
+            placeholder="Enter an assignee" />
+          <span class="error" *ngIf="assignee.invalid && assignee.touched">Enter an assignee.</span>
+        </div>
+
+        <div class="form-field">
+          <label for="priority">Priority</label>
+          <select id="priority" name="priority" [(ngModel)]="ticket.priority">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <a class="cancel-button" routerLink="/console">Cancel</a>
+        <button class="submit-button" type="submit">Create Ticket</button>
+      </div>
+    </form>
+  </section>
+</main>

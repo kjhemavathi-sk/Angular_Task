@@ -1,0 +1,23 @@
+<header class="navbar">
+  <div class="navbar-content">
+    <a class="brand" routerLink="/console" aria-label="Ticket Console home">
+      Ticket Console
+    </a>
+
+    <nav aria-label="Main navigation">
+      <a
+        class="nav-link"
+        routerLink="/console"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">
+        Console
+      </a>
+      <a
+        class="nav-link"
+        routerLink="/create-ticket"
+        routerLinkActive="active">
+        Create Ticket
+      </a>
+    </nav>
+  </div>
+</header>

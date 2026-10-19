@@ -1,0 +1,57 @@
+<main class="ticket-container">
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">Workspace</p>
+      <h1>Console</h1>
+      <p class="subtitle">View and track all tickets.</p>
+    </div>
+    <a class="create-button" routerLink="/create-ticket">Create Ticket</a>
+  </div>
+
+  <ng-container *ngIf="tickets$ | async as tickets">
+    <div class="table-wrapper" *ngIf="tickets.length; else emptyState">
+      <table class="ticket-table">
+        <caption class="visually-hidden">All tickets</caption>
+        <thead>
+          <tr>
+            <th scope="col">Ticket ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Assignee</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Status</th>
+            <th scope="col">Created Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ticket of tickets">
+            <td>{{ ticket.id }}</td>
+            <td>
+              <strong>{{ ticket.title }}</strong>
+              <span class="description">{{ ticket.description }}</span>
+            </td>
+            <td>{{ ticket.assignee }}</td>
+            <td>
+              <span [class]="'badge priority-' + ticket.priority.toLowerCase()">
+                {{ ticket.priority }}
+              </span>
+            </td>
+            <td>
+              <span [class]="'badge status-' + ticket.status.toLowerCase().replace(' ', '-')">
+                {{ ticket.status }}
+              </span>
+            </td>
+            <td>{{ ticket.createdDate }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+
+  <ng-template #emptyState>
+    <section class="empty-state">
+      <h2>No tickets yet</h2>
+      <p>Create a ticket to see it in the console.</p>
+      <a class="create-button" routerLink="/create-ticket">Create Ticket</a>
+    </section>
+  </ng-template>
+</main>

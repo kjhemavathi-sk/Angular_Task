@@ -1,0 +1,47 @@
+[
+  {
+    "id": "TKT-001",
+    "title": "Fix login page crash on iOS",
+    "description": "Investigate and resolve the login crash affecting iOS users.",
+    "assignee": "Alice Johnson",
+    "priority": "High",
+    "status": "In Progress",
+    "createdDate": "2026-04-20"
+  },
+  {
+    "id": "TKT-002",
+    "title": "Add dark mode support",
+    "description": "Add a dark theme option across the application.",
+    "assignee": "Bob Smith",
+    "priority": "Medium",
+    "status": "Open",
+    "createdDate": "2026-04-21"
+  },
+  {
+    "id": "TKT-003",
+    "title": "Update API documentation",
+    "description": "Bring the API documentation up to date with the latest endpoints.",
+    "assignee": "Carol White",
+    "priority": "Low",
+    "status": "Done",
+    "createdDate": "2026-04-22"
+  },
+  {
+    "id": "TKT-004",
+    "title": "Performance issue on dashboard",
+    "description": "Improve dashboard load time for users with large datasets.",
+    "assignee": "David Lee",
+    "priority": "High",
+    "status": "Open",
+    "createdDate": "2026-04-23"
+  },
+  {
+    "id": "TKT-005",
+    "title": "Broken image on profile page",
+    "description": "Fix the missing profile image displayed on the profile page.",
+    "assignee": "Eve Martinez",
+    "priority": "Medium",
+    "status": "In Review",
+    "createdDate": "2026-04-24"
+  }
+]
