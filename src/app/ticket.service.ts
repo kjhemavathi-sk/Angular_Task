@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { Observable, ReplaySubject } from 'rxjs';
+import { delay, map } from 'rxjs/operators';
 
 export interface Ticket {
   id: string;
@@ -24,8 +24,10 @@ export interface CreateTicketInput {
   providedIn: 'root'
 })
 export class TicketService {
-  private readonly ticketsSubject = new BehaviorSubject<Ticket[]>([]);
+  private readonly ticketsSubject = new ReplaySubject<Ticket[]>(1);
   private readonly createdTickets: Ticket[] = [];
+  private readonly deletedTicketIds = new Set<string>();
+  private tickets: Ticket[] = [];
 
   readonly tickets$ = this.ticketsSubject.asObservable();
 
@@ -33,16 +35,64 @@ export class TicketService {
     this.fetchTickets();
   }
 
+  getTicket(id: string): Observable<Ticket | undefined> {
+    return this.tickets$.pipe(map(tickets => tickets.find(ticket => ticket.id === id)));
+  }
+
   createTicket(input: CreateTicketInput): void {
     const ticket: Ticket = {
-      id: `TKT-${String(this.ticketsSubject.value.length + 1).padStart(3, '0')}`,
+      id: this.getNextTicketId(),
       ...input,
       status: 'Open',
       createdDate: new Date().toISOString().slice(0, 10)
     };
 
     this.createdTickets.push(ticket);
-    this.ticketsSubject.next([...this.ticketsSubject.value, ticket]);
+    this.tickets = [...this.tickets, ticket];
+    this.ticketsSubject.next(this.tickets);
+  }
+
+  updateTicket(id: string, input: CreateTicketInput): void {
+    const ticketIndex = this.tickets.findIndex(ticket => ticket.id === id);
+
+    if (ticketIndex === -1) {
+      return;
+    }
+
+    const updatedTicket: Ticket = {
+      ...this.tickets[ticketIndex],
+      ...input
+    };
+
+    this.tickets = this.tickets.map(ticket => ticket.id === id ? updatedTicket : ticket);
+
+    const createdTicketIndex = this.createdTickets.findIndex(ticket => ticket.id === id);
+    if (createdTicketIndex !== -1) {
+      this.createdTickets[createdTicketIndex] = updatedTicket;
+    }
+
+    this.ticketsSubject.next(this.tickets);
+  }
+
+  deleteTicket(id: string): void {
+    this.deletedTicketIds.add(id);
+    this.tickets = this.tickets.filter(ticket => ticket.id !== id);
+
+    const createdTicketIndex = this.createdTickets.findIndex(ticket => ticket.id === id);
+    if (createdTicketIndex !== -1) {
+      this.createdTickets.splice(createdTicketIndex, 1);
+    }
+
+    this.ticketsSubject.next(this.tickets);
+  }
+
+  private getNextTicketId(): string {
+    const highestTicketNumber = this.tickets.reduce((highest, ticket) => {
+      const ticketNumber = Number(ticket.id.replace('TKT-', ''));
+      return Number.isNaN(ticketNumber) ? highest : Math.max(highest, ticketNumber);
+    }, 0);
+
+    return `TKT-${String(highestTicketNumber + 1).padStart(3, '0')}`;
   }
 
   private fetchTickets(): void {
@@ -50,10 +100,16 @@ export class TicketService {
       .get<Ticket[]>('assets/tickets.json')
       .pipe(delay(300))
       .subscribe({
-        next: tickets => this.ticketsSubject.next([...tickets, ...this.createdTickets]),
+        next: tickets => {
+          this.tickets = [
+            ...tickets.filter(ticket => !this.deletedTicketIds.has(ticket.id)),
+            ...this.createdTickets
+          ];
+          this.ticketsSubject.next(this.tickets);
+        },
         error: error => {
           console.error('Unable to load tickets.', error);
-          this.ticketsSubject.next([...this.createdTickets]);
+          this.ticketsSubject.next(this.tickets);
         }
       });
   }

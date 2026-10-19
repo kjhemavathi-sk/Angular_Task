@@ -1,0 +1,46 @@
+<main class="details-container">
+  <ng-container *ngIf="ticket$ | async as ticket; else notFound">
+    <a class="back-link" routerLink="/console">← Back to Console</a>
+
+    <div class="page-heading">
+      <div>
+        <p class="eyebrow">Ticket Details</p>
+        <h1>{{ ticket.title }}</h1>
+        <p class="ticket-id">{{ ticket.id }}</p>
+      </div>
+      <span [class]="'badge status-' + ticket.status.toLowerCase().replace(' ', '-')">
+        {{ ticket.status }}
+      </span>
+    </div>
+
+    <section class="details-card">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="detail-label">Priority</span>
+          <span [class]="'badge priority-' + ticket.priority.toLowerCase()">{{ ticket.priority }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Assignee</span>
+          <span>{{ ticket.assignee }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Created Date</span>
+          <span>{{ ticket.createdDate }}</span>
+        </div>
+      </div>
+
+      <div class="description-section">
+        <h2>Description</h2>
+        <p>{{ ticket.description }}</p>
+      </div>
+    </section>
+  </ng-container>
+
+  <ng-template #notFound>
+    <section class="not-found">
+      <h1>Ticket not found</h1>
+      <p>The requested ticket does not exist.</p>
+      <a class="back-button" routerLink="/console">Back to Console</a>
+    </section>
+  </ng-template>
+</main>
