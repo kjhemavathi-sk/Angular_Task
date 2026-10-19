@@ -1,25 +1,30 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import {
+  PriorityFilter,
+  StatusFilter,
+  TicketFiltersComponent
+} from '../ticket-filters/ticket-filters.component';
 import { Ticket, TicketService } from '../ticket.service';
+import { ToastService } from '../toast.service';
 
-type StatusFilter = Ticket['status'] | 'All';
-type PriorityFilter = Ticket['priority'] | 'All';
+type ConsoleStatusFilter = StatusFilter;
+type ConsolePriorityFilter = PriorityFilter;
 
 @Component({
   selector: 'app-console',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, RouterLink, TicketFiltersComponent],
   templateUrl: './console.component.html',
   styleUrls: ['./console.component.css']
 })
 export class ConsoleComponent {
-  private readonly statusFilterSubject = new BehaviorSubject<StatusFilter>('All');
-  private readonly priorityFilterSubject = new BehaviorSubject<PriorityFilter>('All');
+  private readonly statusFilterSubject = new BehaviorSubject<ConsoleStatusFilter>('All');
+  private readonly priorityFilterSubject = new BehaviorSubject<ConsolePriorityFilter>('All');
 
   readonly statuses: Ticket['status'][] = ['Open', 'In Progress', 'In Review', 'Done'];
   readonly priorities: Ticket['priority'][] = ['Low', 'Medium', 'High'];
@@ -35,19 +40,22 @@ export class ConsoleComponent {
     ))
   );
 
-  statusFilter: StatusFilter = 'All';
-  priorityFilter: PriorityFilter = 'All';
+  statusFilter: ConsoleStatusFilter = 'All';
+  priorityFilter: ConsolePriorityFilter = 'All';
 
   constructor(
     private readonly ticketService: TicketService,
+    private readonly toastService: ToastService,
     private readonly router: Router
   ) { }
 
-  onStatusFilterChange(status: StatusFilter): void {
+  onStatusFilterChange(status: ConsoleStatusFilter): void {
+    this.statusFilter = status;
     this.statusFilterSubject.next(status);
   }
 
-  onPriorityFilterChange(priority: PriorityFilter): void {
+  onPriorityFilterChange(priority: ConsolePriorityFilter): void {
+    this.priorityFilter = priority;
     this.priorityFilterSubject.next(priority);
   }
 
@@ -60,6 +68,9 @@ export class ConsoleComponent {
   }
 
   deleteTicket(id: string): void {
-    this.ticketService.deleteTicket(id);
+    this.ticketService.deleteTicket(id).subscribe({
+      next: () => this.toastService.show('Ticket deleted successfully.'),
+      error: () => this.toastService.show('Unable to delete ticket.', 'error')
+    });
   }
 }

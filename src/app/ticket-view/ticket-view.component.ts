@@ -10,6 +10,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { take } from 'rxjs/operators';
 
 import { TicketService } from '../ticket.service';
+import { ToastService } from '../toast.service';
 
 @Component({
   selector: 'app-ticket-view',
@@ -27,6 +28,7 @@ export class TicketViewComponent {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly ticketService: TicketService,
+    private readonly toastService: ToastService,
     private readonly router: Router,
     private readonly route: ActivatedRoute
   ) {
@@ -66,18 +68,28 @@ export class TicketViewComponent {
     const ticket = this.ticketForm.getRawValue();
 
     if (this.editMode && this.ticketId) {
-      this.ticketService.updateTicket(this.ticketId, ticket);
-      this.submitted = true;
+      this.ticketService.updateTicket(this.ticketId, ticket).subscribe({
+        next: () => {
+          this.submitted = true;
+          this.toastService.show('Ticket updated successfully.');
+        },
+        error: () => this.toastService.show('Unable to update ticket.', 'error')
+      });
       return;
     }
 
-    this.ticketService.createTicket(ticket);
-    this.submitted = true;
-    this.ticketForm.reset({
-      title: '',
-      description: '',
-      assignee: '',
-      priority: 'Medium'
+    this.ticketService.createTicket(ticket).subscribe({
+      next: () => {
+        this.submitted = true;
+        this.toastService.show('Ticket created successfully.');
+        this.ticketForm.reset({
+          title: '',
+          description: '',
+          assignee: '',
+          priority: 'Medium'
+        });
+      },
+      error: () => this.toastService.show('Unable to create ticket.', 'error')
     });
   }
 

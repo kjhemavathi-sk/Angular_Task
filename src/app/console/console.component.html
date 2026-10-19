@@ -8,31 +8,13 @@
     <a class="create-button" routerLink="/create-ticket">Create Ticket</a>
   </div>
 
-  <section class="filters" aria-label="Ticket filters">
-    <div class="filter-field">
-      <label for="status-filter">Status</label>
-      <select
-        id="status-filter"
-        name="status-filter"
-        [(ngModel)]="statusFilter"
-        (ngModelChange)="onStatusFilterChange($event)">
-        <option value="All">All statuses</option>
-        <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
-      </select>
-    </div>
-
-    <div class="filter-field">
-      <label for="priority-filter">Priority</label>
-      <select
-        id="priority-filter"
-        name="priority-filter"
-        [(ngModel)]="priorityFilter"
-        (ngModelChange)="onPriorityFilterChange($event)">
-        <option value="All">All priorities</option>
-        <option *ngFor="let priority of priorities" [value]="priority">{{ priority }}</option>
-      </select>
-    </div>
-  </section>
+  <app-ticket-filters
+    [statuses]="statuses"
+    [priorities]="priorities"
+    [statusFilter]="statusFilter"
+    [priorityFilter]="priorityFilter"
+    (statusFilterChange)="onStatusFilterChange($event)"
+    (priorityFilterChange)="onPriorityFilterChange($event)"></app-ticket-filters>
 
   <ng-container *ngIf="filteredTickets$ | async as tickets">
     <p class="result-count">{{ tickets.length }} ticket{{ tickets.length === 1 ? '' : 's' }}</p>
@@ -60,24 +42,24 @@
             (click)="openTicket(ticket.id)"
             (keydown.enter)="openTicket(ticket.id)"
             (keydown.space)="openTicket(ticket.id)">
-            <td>{{ ticket.id }}</td>
-            <td>
+            <td data-label="Ticket ID">{{ ticket.id }}</td>
+            <td data-label="Title">
               <strong>{{ ticket.title }}</strong>
               <span class="description">{{ ticket.description }}</span>
             </td>
-            <td>{{ ticket.assignee }}</td>
-            <td>
+            <td data-label="Assignee">{{ ticket.assignee }}</td>
+            <td data-label="Priority">
               <span [class]="'badge priority-' + ticket.priority.toLowerCase()">
                 {{ ticket.priority }}
               </span>
             </td>
-            <td>
+            <td data-label="Status">
               <span [class]="'badge status-' + ticket.status.toLowerCase().replace(' ', '-')">
                 {{ ticket.status }}
               </span>
             </td>
-            <td>{{ ticket.createdDate }}</td>
-            <td class="actions-cell">
+            <td data-label="Created Date">{{ ticket.createdDate }}</td>
+            <td class="actions-cell" data-label="Actions">
               <button
                 type="button"
                 class="action-button edit-button"

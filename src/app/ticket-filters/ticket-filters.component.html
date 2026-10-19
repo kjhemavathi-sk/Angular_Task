@@ -1,0 +1,25 @@
+<section class="filters" aria-label="Ticket filters">
+  <div class="filter-field">
+    <label for="status-filter">Status</label>
+    <select
+      id="status-filter"
+      name="status-filter"
+      [(ngModel)]="statusFilter"
+      (ngModelChange)="onStatusFilterChange($event)">
+      <option value="All">All statuses</option>
+      <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+    </select>
+  </div>
+
+  <div class="filter-field">
+    <label for="priority-filter">Priority</label>
+    <select
+      id="priority-filter"
+      name="priority-filter"
+      [(ngModel)]="priorityFilter"
+      (ngModelChange)="onPriorityFilterChange($event)">
+      <option value="All">All priorities</option>
+      <option *ngFor="let priority of priorities" [value]="priority">{{ priority }}</option>
+    </select>
+  </div>
+</section>
