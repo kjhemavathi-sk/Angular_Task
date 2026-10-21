@@ -1,4 +1,6 @@
 <section class="filters" aria-label="Ticket filters">
+  <button type="button" class="filter-trigger">☷ <span>Filter</span></button>
+
   <div class="filter-field">
     <label for="status-filter">Status</label>
     <select
@@ -6,7 +8,7 @@
       name="status-filter"
       [(ngModel)]="statusFilter"
       (ngModelChange)="onStatusFilterChange($event)">
-      <option value="All">All statuses</option>
+      <option value="All">All open</option>
       <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
     </select>
   </div>
@@ -22,4 +24,16 @@
       <option *ngFor="let priority of priorities" [value]="priority">{{ priority }}</option>
     </select>
   </div>
+
+  <label class="search-field" for="ticket-search">
+    <span class="visually-hidden">Search tickets</span>
+    <span aria-hidden="true">⌕</span>
+    <input
+      id="ticket-search"
+      name="ticket-search"
+      type="search"
+      placeholder="Search"
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchTermChange($event)" />
+  </label>
 </section>

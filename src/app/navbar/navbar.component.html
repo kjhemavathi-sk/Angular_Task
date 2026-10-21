@@ -1,22 +1,17 @@
 <header class="navbar">
   <div class="navbar-content">
-    <a class="brand" routerLink="/console" aria-label="Ticket Console home">
-      Ticket Console
+    <a class="brand" routerLink="/console" aria-label="TicketDesk home">
+      <span class="brand-mark" aria-hidden="true">✦</span>
+      <span>TicketDesk</span>
     </a>
 
     <nav aria-label="Main navigation">
-      <a
-        class="nav-link"
-        routerLink="/console"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }">
-        Console
+      <a class="nav-link" routerLink="/console" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        Tickets
       </a>
-      <a
-        class="nav-link"
-        routerLink="/create-ticket"
-        routerLinkActive="active">
-        Create Ticket
+      <a class="nav-link" routerLink="/create-ticket" routerLinkActive="active">
+        Create New
+        <span class="nav-caret" aria-hidden="true">⌄</span>
       </a>
     </nav>
   </div>

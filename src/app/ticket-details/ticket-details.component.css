@@ -1,14 +1,22 @@
 .details-container {
+  background: #f4f5f6;
+  min-height: calc(100vh - 48px);
+  padding: 18px 24px 32px;
+}
+
+.details-container > ng-container,
+.details-container > .not-found {
+  display: block;
   margin: 0 auto;
-  max-width: 900px;
-  padding: 40px 24px;
+  max-width: 1440px;
 }
 
 .back-link {
-  color: #0071ce;
+  color: #368783;
   display: inline-block;
+  font-size: 0.72rem;
   font-weight: 700;
-  margin-bottom: 28px;
+  margin-bottom: 14px;
   text-decoration: none;
 }
 
@@ -18,17 +26,19 @@
 
 .page-heading {
   align-items: flex-start;
+  border-bottom: 1px solid #d7dcdf;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin: 0 auto 16px;
+  max-width: 1440px;
+  padding-bottom: 15px;
 }
 
 .eyebrow {
-  color: #536471;
-  font-size: 0.75rem;
-  font-weight: 700;
+  color: #69747a;
+  font-size: 0.68rem;
   letter-spacing: 0.08em;
-  margin: 0 0 8px;
+  margin: 0 0 7px;
   text-transform: uppercase;
 }
 
@@ -39,125 +49,174 @@ p {
 }
 
 h1 {
-  color: #1f2933;
-  font-size: 2rem;
-  margin-bottom: 8px;
+  color: #252b2e;
+  font-size: 1.55rem;
+  font-weight: 600;
+  margin-bottom: 5px;
 }
 
 .ticket-id {
-  color: #536471;
+  color: #368783;
+  font-size: 0.75rem;
+  font-weight: 700;
   margin-bottom: 0;
 }
 
 .details-card,
 .not-found {
   background: #ffffff;
-  border: 1px solid #e1e5e8;
-  border-radius: 8px;
-  padding: 28px;
+  border: 1px solid #d7dcdf;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(25, 35, 40, 0.04);
+  margin: 0 auto;
+  max-width: 1440px;
+  padding: 24px;
 }
 
 .detail-grid {
-  border-bottom: 1px solid #e1e5e8;
+  border-bottom: 1px solid #eaedef;
   display: grid;
-  gap: 24px;
+  gap: 0;
   grid-template-columns: repeat(3, 1fr);
-  padding-bottom: 24px;
+  padding-bottom: 22px;
 }
 
 .detail-item {
+  border-right: 1px solid #eaedef;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  min-height: 58px;
+  padding: 0 24px;
+}
+
+.detail-item:first-child {
+  padding-left: 0;
+}
+
+.detail-item:last-child {
+  border-right: 0;
 }
 
 .detail-label {
-  color: #536471;
-  font-size: 0.8rem;
+  color: #69747a;
+  font-size: 0.67rem;
   font-weight: 700;
   text-transform: uppercase;
 }
 
+.detail-item > span:last-child {
+  color: #424b50;
+  font-size: 0.82rem;
+}
+
 .description-section {
-  padding-top: 24px;
+  padding-top: 22px;
 }
 
 .description-section h2 {
-  color: #1f2933;
-  font-size: 1.1rem;
+  color: #353d41;
+  font-size: 0.85rem;
+  margin-bottom: 9px;
 }
 
 .description-section p,
 .not-found p {
-  color: #536471;
+  color: #69747a;
+  font-size: 0.8rem;
   line-height: 1.6;
+  margin-bottom: 0;
 }
 
 .badge {
   align-self: flex-start;
-  border-radius: 12px;
+  border-radius: 2px;
   display: inline-block;
-  font-size: 0.75rem;
+  font-size: 0.64rem;
   font-weight: 700;
-  padding: 4px 10px;
+  padding: 4px 7px;
+  white-space: nowrap;
 }
 
 .priority-high {
-  background-color: #fde8e8;
-  color: #c0392b;
+  background: #f47b20;
+  color: #ffffff;
 }
 
 .priority-medium {
-  background-color: #fef3cd;
-  color: #a85d00;
+  background: #f6c343;
+  color: #463600;
 }
 
 .priority-low {
-  background-color: #d4edda;
-  color: #207a3c;
+  background: #8ac34a;
+  color: #173700;
 }
 
-.status-open {
-  background-color: #dbeafe;
-  color: #1d4ed8;
+.status-open,
+.status-in-progress,
+.status-in-review,
+.status-done {
+  background: #e4f0ef;
+  color: #366d6a;
 }
 
 .status-in-progress {
-  background-color: #fff3cd;
-  color: #8a5700;
-}
-
-.status-in-review {
-  background-color: #ede9fe;
-  color: #6d28d9;
+  background: #fff0df;
+  color: #a65b19;
 }
 
 .status-done {
-  background-color: #d1fae5;
-  color: #065f46;
+  background: #e4f2dc;
+  color: #4f7f34;
 }
 
 .back-button {
-  background: #0071ce;
-  border-radius: 4px;
+  background: #e97622;
+  border-radius: 3px;
   color: #ffffff;
   display: inline-block;
+  font-size: 0.78rem;
   font-weight: 700;
-  padding: 11px 16px;
+  margin-top: 18px;
+  padding: 9px 14px;
   text-decoration: none;
 }
 
-@media (max-width: 600px) {
+.back-button:hover {
+  background: #c95e12;
+}
+
+@media (max-width: 760px) {
   .details-container {
-    padding: 28px 16px;
+    padding: 18px 14px 24px;
   }
 
   .page-heading {
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
+  }
+
+  .details-card,
+  .not-found {
+    padding: 18px;
   }
 
   .detail-grid {
+    gap: 0;
     grid-template-columns: 1fr;
+  }
+
+  .detail-item,
+  .detail-item:first-child,
+  .detail-item:last-child {
+    border-bottom: 1px solid #eaedef;
+    border-right: 0;
+    padding: 13px 0;
+  }
+
+  .detail-item:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
   }
 }

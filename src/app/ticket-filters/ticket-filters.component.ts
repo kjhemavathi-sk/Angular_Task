@@ -19,9 +19,11 @@ export class TicketFiltersComponent {
   @Input() priorities: Ticket['priority'][] = [];
   @Input() statusFilter: StatusFilter = 'All';
   @Input() priorityFilter: PriorityFilter = 'All';
+  @Input() searchTerm = '';
 
   @Output() statusFilterChange = new EventEmitter<StatusFilter>();
   @Output() priorityFilterChange = new EventEmitter<PriorityFilter>();
+  @Output() searchTermChange = new EventEmitter<string>();
 
   onStatusFilterChange(status: StatusFilter): void {
     this.statusFilterChange.emit(status);
@@ -29,5 +31,9 @@ export class TicketFiltersComponent {
 
   onPriorityFilterChange(priority: PriorityFilter): void {
     this.priorityFilterChange.emit(priority);
+  }
+
+  onSearchTermChange(searchTerm: string): void {
+    this.searchTermChange.emit(searchTerm);
   }
 }

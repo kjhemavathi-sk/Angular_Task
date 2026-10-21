@@ -1,19 +1,36 @@
 .form-container {
-  margin: 0 auto;
-  max-width: 760px;
-  padding: 40px 24px;
+  background: #f4f5f6;
+  min-height: calc(100vh - 48px);
+  padding: 18px 24px 32px;
+}
+
+.breadcrumb {
+  color: #69747a;
+  font-size: 0.7rem;
+  margin: 0 auto 14px;
+  max-width: 1440px;
+}
+
+.breadcrumb span {
+  color: #a4aaae;
+  margin: 0 6px;
 }
 
 .page-heading {
-  margin-bottom: 24px;
+  align-items: flex-start;
+  border-bottom: 1px solid #d7dcdf;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto 16px;
+  max-width: 1440px;
+  padding-bottom: 15px;
 }
 
 .eyebrow {
-  color: #536471;
-  font-size: 0.75rem;
-  font-weight: 700;
+  color: #69747a;
+  font-size: 0.68rem;
   letter-spacing: 0.08em;
-  margin: 0 0 8px;
+  margin: 0 0 7px;
   text-transform: uppercase;
 }
 
@@ -23,21 +40,41 @@ p {
 }
 
 h1 {
-  color: #1f2933;
-  font-size: 2rem;
-  margin-bottom: 8px;
+  color: #252b2e;
+  font-size: 1.55rem;
+  font-weight: 600;
+  margin-bottom: 5px;
 }
 
 .subtitle {
-  color: #536471;
+  color: #69747a;
+  font-size: 0.8rem;
   margin-bottom: 0;
+}
+
+.back-link {
+  color: #368783;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
 }
 
 .form-card {
   background: #ffffff;
-  border: 1px solid #e1e5e8;
-  border-radius: 8px;
-  padding: 28px;
+  border: 1px solid #d7dcdf;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(25, 35, 40, 0.04);
+  margin: 0 auto;
+  max-width: 1440px;
+  padding: 24px;
+}
+
+.form-card form {
+  max-width: 960px;
 }
 
 .form-field {
@@ -47,23 +84,25 @@ h1 {
 }
 
 .form-field label {
-  color: #1f2933;
-  font-size: 0.9rem;
+  color: #424b50;
+  font-size: 0.75rem;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 7px;
 }
 
 .form-field label span {
-  color: #c0392b;
+  color: #b94a40;
 }
 
 .form-field input,
 .form-field select,
 .form-field textarea {
-  border: 1px solid #aab7c4;
-  border-radius: 4px;
-  color: #1f2933;
-  padding: 11px 12px;
+  background: #ffffff;
+  border: 1px solid #bfc7ca;
+  border-radius: 3px;
+  color: #353d41;
+  font-size: 0.8rem;
+  padding: 10px 11px;
 }
 
 .form-field textarea {
@@ -74,8 +113,8 @@ h1 {
 .form-field input:focus,
 .form-field select:focus,
 .form-field textarea:focus {
-  border-color: #0071ce;
-  box-shadow: 0 0 0 2px rgba(0, 113, 206, 0.2);
+  border-color: #4f7774;
+  box-shadow: 0 0 0 2px rgba(79, 119, 116, 0.16);
   outline: none;
 }
 
@@ -86,72 +125,83 @@ h1 {
 }
 
 .error {
-  color: #c0392b;
-  font-size: 0.8rem;
+  color: #a74439;
+  font-size: 0.7rem;
   margin-top: 6px;
 }
 
 .form-actions {
   align-items: center;
+  border-top: 1px solid #eaedef;
   display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-  margin-top: 8px;
+  gap: 10px;
+  justify-content: flex-start;
+  margin-top: 6px;
+  padding-top: 18px;
 }
 
 .cancel-button,
 .submit-button {
   border: 0;
-  border-radius: 4px;
+  border-radius: 3px;
   cursor: pointer;
+  font-size: 0.78rem;
   font-weight: 700;
-  padding: 11px 16px;
+  padding: 9px 14px;
   text-decoration: none;
 }
 
 .cancel-button {
-  background: #eef1f4;
-  color: #1f2933;
+  background: #eef1f2;
+  color: #4f5b61;
 }
 
 .submit-button {
-  background: #0071ce;
+  background: #e97622;
   color: #ffffff;
 }
 
 .cancel-button:hover {
-  background: #dce2e7;
+  background: #dfe4e6;
 }
 
 .submit-button:hover {
-  background: #005ea8;
+  background: #c95e12;
 }
 
 .success-message {
-  background: #d1fae5;
-  border-radius: 4px;
-  color: #065f46;
-  margin-bottom: 24px;
-  padding: 12px 16px;
+  background: #e4f0ef;
+  border-left: 3px solid #4f7774;
+  color: #366d6a;
+  font-size: 0.78rem;
+  margin-bottom: 20px;
+  padding: 11px 13px;
 }
 
 .success-message button {
   background: none;
   border: 0;
-  color: #065f46;
+  color: #366d6a;
   cursor: pointer;
+  font-size: inherit;
   font-weight: 700;
+  margin-left: 6px;
   padding: 0;
   text-decoration: underline;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 760px) {
   .form-container {
-    padding: 28px 16px;
+    padding: 18px 14px 24px;
+  }
+
+  .page-heading {
+    flex-direction: column;
+    gap: 14px;
   }
 
   .form-card {
-    padding: 20px;
+    padding: 18px;
   }
 
   .form-row {
@@ -160,8 +210,8 @@ h1 {
   }
 
   .form-actions {
-    flex-direction: column-reverse;
     align-items: stretch;
+    flex-direction: column-reverse;
   }
 
   .cancel-button,

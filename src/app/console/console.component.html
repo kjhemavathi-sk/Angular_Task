@@ -1,36 +1,36 @@
-<main class="ticket-container">
-  <div class="page-heading">
-    <div>
-      <p class="eyebrow">Workspace</p>
-      <h1>Console</h1>
-      <p class="subtitle">View and track all tickets.</p>
+<main class="console-page">
+  <section class="console-header">
+    <p class="breadcrumb">Workspace <span aria-hidden="true">/</span> Tickets</p>
+    <div class="title-row">
+      <div>
+        <h1>Tickets</h1>
+        <p class="page-description">Manage incidents, requests, and change tickets.</p>
+      </div>
+      <a class="create-button" routerLink="/create-ticket">Create New</a>
     </div>
-    <a class="create-button" routerLink="/create-ticket">Create Ticket</a>
-  </div>
 
-  <app-ticket-filters
-    [statuses]="statuses"
-    [priorities]="priorities"
-    [statusFilter]="statusFilter"
-    [priorityFilter]="priorityFilter"
-    (statusFilterChange)="onStatusFilterChange($event)"
-    (priorityFilterChange)="onPriorityFilterChange($event)"></app-ticket-filters>
+    <div class="view-toolbar">
+      <button type="button" class="view-tab active">All open tickets</button>
+    </div>
+  </section>
 
-  <ng-container *ngIf="filteredTickets$ | async as tickets">
-    <p class="result-count">{{ tickets.length }} ticket{{ tickets.length === 1 ? '' : 's' }}</p>
+  <ng-container *ngIf="tickets$ | async as tickets">
+    <div class="table-toolbar">
+      <span>{{ tickets.length }} tickets</span>
+    </div>
 
     <div class="table-wrapper" *ngIf="tickets.length; else noResults">
       <table class="ticket-table">
         <caption class="visually-hidden">All tickets</caption>
         <thead>
           <tr>
-            <th scope="col">Ticket ID</th>
-            <th scope="col">Title</th>
-            <th scope="col">Assignee</th>
-            <th scope="col">Priority</th>
+            <th scope="col">Display ID</th>
+            <th scope="col">Assignee name</th>
+            <th scope="col">Summary</th>
             <th scope="col">Status</th>
-            <th scope="col">Created Date</th>
-            <th scope="col">Actions</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Last modified date</th>
+            <th scope="col" class="actions-heading">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -42,36 +42,22 @@
             (click)="openTicket(ticket.id)"
             (keydown.enter)="openTicket(ticket.id)"
             (keydown.space)="openTicket(ticket.id)">
-            <td data-label="Ticket ID">{{ ticket.id }}</td>
-            <td data-label="Title">
+            <td data-label="Display ID"><a class="ticket-link" [routerLink]="['/ticket', ticket.id]" (click)="$event.stopPropagation()">{{ ticket.id }}</a></td>
+            <td data-label="Assignee name">{{ ticket.assignee }}</td>
+            <td data-label="Summary" class="summary-cell">
               <strong>{{ ticket.title }}</strong>
               <span class="description">{{ ticket.description }}</span>
             </td>
-            <td data-label="Assignee">{{ ticket.assignee }}</td>
-            <td data-label="Priority">
-              <span [class]="'badge priority-' + ticket.priority.toLowerCase()">
-                {{ ticket.priority }}
-              </span>
-            </td>
             <td data-label="Status">
-              <span [class]="'badge status-' + ticket.status.toLowerCase().replace(' ', '-')">
-                {{ ticket.status }}
-              </span>
+              <span [class]="'status-badge status-' + ticket.status.toLowerCase().replace(' ', '-')">{{ ticket.status }}</span>
             </td>
-            <td data-label="Created Date">{{ ticket.createdDate }}</td>
+            <td data-label="Priority">
+              <span [class]="'priority-badge priority-' + ticket.priority.toLowerCase()">{{ ticket.priority }}</span>
+            </td>
+            <td data-label="Last modified date">{{ ticket.createdDate }}</td>
             <td class="actions-cell" data-label="Actions">
-              <button
-                type="button"
-                class="action-button edit-button"
-                (click)="editTicket(ticket.id); $event.stopPropagation()">
-                Edit
-              </button>
-              <button
-                type="button"
-                class="action-button delete-button"
-                (click)="deleteTicket(ticket.id); $event.stopPropagation()">
-                Delete
-              </button>
+              <button type="button" class="action-button edit-button" (click)="editTicket(ticket.id); $event.stopPropagation()">Edit</button>
+              <button type="button" class="action-button delete-button" (click)="deleteTicket(ticket.id); $event.stopPropagation()">Delete</button>
             </td>
           </tr>
         </tbody>
@@ -82,7 +68,7 @@
   <ng-template #noResults>
     <section class="empty-state">
       <h2>No matching tickets</h2>
-      <p>Try changing the status or priority filters.</p>
+      <p>No tickets available.</p>
     </section>
   </ng-template>
 </main>

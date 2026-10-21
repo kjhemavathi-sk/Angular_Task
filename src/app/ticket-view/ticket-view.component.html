@@ -1,10 +1,15 @@
 <main class="form-container">
+  <p class="breadcrumb">Workspace <span aria-hidden="true">/</span> Ticket Management</p>
+
   <div class="page-heading">
-    <p class="eyebrow">Ticket Management</p>
-    <h1>{{ editMode ? 'Edit Ticket' : 'Create Ticket' }}</h1>
-    <p class="subtitle">
-      {{ editMode ? 'Update the ticket details below.' : 'Add a new ticket to the console.' }}
-    </p>
+    <div>
+      <p class="eyebrow">Ticket Management</p>
+      <h1>{{ editMode ? 'Edit Ticket' : 'Create Ticket' }}</h1>
+      <p class="subtitle">
+        {{ editMode ? 'Update the ticket details below.' : 'Add a new ticket to the console.' }}
+      </p>
+    </div>
+    <a class="back-link" routerLink="/console">← Back to Tickets</a>
   </div>
 
   <section class="form-card">
